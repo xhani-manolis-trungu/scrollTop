@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start:scroll-top": "ng serve scroll-top",
+    "start:scrollToTopTrial": "ng serve scrollToTopTrial",
+    "build:scroll-top": "ng build scroll-top",
+    "watch": "ng build scroll-top --watch --configuration development",
     "test": "ng test"
   },
   "private": true,

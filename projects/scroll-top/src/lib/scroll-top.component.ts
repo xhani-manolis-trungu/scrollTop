@@ -1,20 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ScrollTopService } from './scroll-top.service';
 
 @Component({
   selector: 'lib-scroll-top',
   template: `
-    <p>
-      scroll-top works!
-    </p>
+    <div class="scroll-top" blScrolltop>
+  </div>
   `,
-  styles: [
-  ]
 })
-export class ScrollTopComponent implements OnInit {
+export class ScrollTopComponent implements OnInit, OnDestroy {
+  private _elementId!: string;
 
-  constructor() { }
+  @Input()
+  set elementId(value: string) {
+    this._elementId = value;
+    this.service.init(value);
+  }
+
+  constructor(private service: ScrollTopService) { }
 
   ngOnInit(): void {
+    this.service.init(this._elementId);
+  }
+
+  ngOnDestroy() {
+    this.service.destroy();
   }
 
 }
