@@ -1,4 +1,4 @@
-import { Directive, HostListener, NgZone } from '@angular/core';
+import { Directive, HostListener, Input, NgZone } from '@angular/core';
 import { ScrollTopService } from './scroll-top.service';
 
 const DURATION = 1000;
@@ -16,13 +16,27 @@ export class ScrollTopDirective {
     this.scrollABit = this.scrollABit.bind(this);
   }
 
-  @HostListener('click')
-  onclick() {
+  @Input('targetElement') targetElement!: string;
+
+  @HostListener('click', ['$event'])
+  onclick($event: any) {
     this.startTop = this.service.currentPositionY;
     this.startTime = null;
-    this.ngZone.runOutsideAngular(() => { window.requestAnimationFrame(this.scrollABit); });
+
+    if (this.targetElementExists($event, this.targetElement)) {
+      this.ngZone.runOutsideAngular(() => { window.requestAnimationFrame(this.scrollABit); });
+    }
 
     this.service.log('NgScrolltopDirective click');
+  }
+
+  private targetElementExists($event: any, selector: string): boolean {
+    let found = false;
+
+    if ($event?.target.matches(`#${selector}, #${selector} > *`)) {
+      found = true;
+    }
+    return found;
   }
 
   easing = (x: number) => {

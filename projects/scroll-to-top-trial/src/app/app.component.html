@@ -1,6 +1,7 @@
-<main class="parent">
+<main class="parent" blScrolltop [targetElement]="'button'">
   <div class="child" id="child-xyz" style="height: 80vh; width: 30vw; overflow-y: scroll; border: 1px solid gray;">
     <long-list></long-list>
   </div>
+  <button id="button" (click)="buttonClicked()">Button</button>
 </main>
 <lib-scroll-top [elementId]="'child-xyz'"></lib-scroll-top>
